@@ -8,15 +8,15 @@ const loginHandler: RequestHandler = async (req, res, next) => {
     const credentials: UserCredentials = { ...req.body }
     const userService = new UserService(config)
     const user = userService.loginUser(credentials)
-    if (!user) return res.json({ result: false, code: 'user_or_psw_incorrect', message: 'Неверный логин или пароль!' })
+    if (!user) return res.json({ result: false, error: 'user_or_psw_incorrect' })
     req.session!.user = user
-    return res.json({ result: true, user: user.login })
+    return res.json({ result: true, payload: user.login })
 }
 
 const checkAuthHandler: RequestHandler = (req, res, next) => {
     if (req.session!.user) return res.json({
         result: true,
-        user: req.session!.user.login
+        payload: req.session!.user.login
     })
     return res.json({ result: false })
 }
@@ -35,7 +35,7 @@ const testLineHandler: RequestHandler = (req, res, next) => {
     res.setHeader("Access-Control-Allow-Origin", FrontURL);
 
     const user = req.session!.user as User
-    if (!user) return res.send(`data: ${JSON.stringify({ type: 'error', code: 'user not found' })}\n\n`)
+    if (!user) return res.send(`data: ${JSON.stringify({ type: 'error', error: 'user not found' })}\n\n`) //!!!
 
     let test = testsPool.getTestByUser(user)
     test.pipe(res)
