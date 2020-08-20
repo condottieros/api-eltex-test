@@ -23,7 +23,7 @@
     "@types/nconf": "^0.10.0",
     "@types/node": "^13.11.1",
     "@types/session-file-store": "^1.2.1",
-    "bcrypt": "^4.0.1",
+    "bcrypt": "^5.0.0",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "cross-env": "^7.0.2",
